@@ -40,34 +40,34 @@
 
                 <!-- 처음 페이지 버튼 -->
                 <li class="page-item">
-                    <a class="page-link" th:href="@{/list(page=1)}" >
+                    <a class="page-link" th:href="@{/list(page=1, search=${search})}" >
                         <i class="fa-solid fa-angles-left"></i>
                     </a>
                 </li>
 
                 <!-- 이전 버튼 -->
                 <li class="page-item" th:if="${pageInfo.currentPageNum > 1}">
-                    <a class="page-link" th:href="@{/list(page=${pageInfo.currentPageNum - 1})}" >
+                    <a class="page-link" th:href="@{/list(page=${pageInfo.currentPageNum - 1}, search=${search})}" >
                         <i class="fa-solid fa-angle-left"></i>
                     </a>
                 </li>
 
                 <!-- 페이지 범위 보여주는 반복문 -->
                 <th:block th:each="pageNum : ${#numbers.sequence(pageInfo.leftPageNum, pageInfo.rightPageNum)}"> <!-- object로 가져오지 않아도 사용가능-->
-                    <a th:href="@{/list(page=${pageNum})}" class="page-link" th:text="${pageNum}"
+                    <a th:href="@{/list(page=${pageNum}, search=${search})}" class="page-link" th:text="${pageNum}"
                     th:classappend="${pageNum == pageInfo.currentPageNum} ? 'active' : ''"/>
                 </th:block>
 
                 <!-- 다음 버튼 -->
                 <li class="page-item" th:if="${pageInfo.currentPageNum < pageInfo.lastPageNumber}">
-                    <a class="page-link" th:href="@{/list(page=${pageInfo.currentPageNum + 1})}" >
+                    <a class="page-link" th:href="@{/list(page=${pageInfo.currentPageNum + 1}, search=${search})}" >
                         <i class="fa-solid fa-angle-right"></i>
                     </a>
                 </li>
 
                 <!-- 마지막 페이지 버튼 -->
                 <li class="page-item">
-                    <a class="page-link" th:href="@{/list(page=${pageInfo.lastPageNumber})}" >
+                    <a class="page-link" th:href="@{/list(page=${pageInfo.lastPageNumber}, search=${search})}" >
                         <i class="fa-solid fa-angles-right"></i>
                     </a>
                 </li>

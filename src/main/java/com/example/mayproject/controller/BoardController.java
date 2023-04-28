@@ -40,6 +40,7 @@ public class BoardController {
         // 3. add attribute
         model.addAttribute("boardList", result.get("boardList"));
         model.addAttribute("pageInfo", result.get("pageInfo"));
+        model.addAttribute("search", search);
 //        model.addAttribute(result); // addAttribute overroading
 
         // 4. forward/redirect

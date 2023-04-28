@@ -49,7 +49,8 @@ public class BoardService {
         Integer startIndex = (page - 1) * rowPerPage;
 
         // 페이지네이션이 필요한 정보 -----
-        Integer numOfRecords = mapper.countAll(); // 전체 레코드의 개수
+//        Integer numOfRecords = mapper.countAll(); // 전체 레코드의 개수
+        Integer numOfRecords = mapper.countAll(search); // 전체 레코드의 개수
         // 마지막 페이지 번호
         Integer lastPageNumber = (numOfRecords - 1) / rowPerPage + 1;
 

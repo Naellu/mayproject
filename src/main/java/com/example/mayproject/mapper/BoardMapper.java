@@ -74,8 +74,15 @@ public interface BoardMapper {
     List<Board> selectAllPaging(Integer startIndex, Integer rowPerPage, String search);
 
     @Select("""
+            <script>
+            <bind name="pattern" value="'%' + search + '%'" />
             SELECT COUNT(*)
             FROM board
+            WHERE
+                title LIKE #{pattern} OR
+                body LIKE #{pattern} OR
+                writer LIKE #{pattern}
+            </script>
             """) // 전체 게시물 개수 구하기
-    Integer countAll();
+    Integer countAll(String search);
 }

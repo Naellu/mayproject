@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{common/header :: header}">
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<div th:replace="~{common/bodyHeader :: bodyHeader}"></div>
+
+<div class="container-lg">
+    <table class="table table-striped">
+          <thead class="thead-dark">
+          <tr class="text-left">
+              <th scope="col" width="10%"> Id </th>
+              <th scope="col" width="60%"> title </th>
+              <th scope="col"> inserted </th>
+              <th scope="col"> writer </th>
+          </tr>
+          </thead>
+          <tbody class="table-group-divider">
+          <tr th:each="board : ${boardList}">
+              <td th:text="${board.id}">id</td>
+              <td>
+                  <a th:href="@{'/id/' + ${board.id}}" th:text="${board.title}">title</a>
+              </td>
+              <td th:text="${board.writer}">writer</td>
+              <td th:text="${board.inserted}">inserted</td>
+          </tr>
+          </tbody>
+      </table>
+    <a class="btn btn-secondary" th:href="@{/create}">글쓰기</a>
+  </div>
+
+<!-- 페이지네이션 -->
+
+<!--.container-lg>.row-->
+<!--<div class="container-lg">-->
+<!--    <div class="row">-->
+<!--        <nav aria-label="Page navigation example">-->
+<!--            <ul class="pagination justify-content-center">-->
+<!--                <c:foreach begin="1" end="10" var="pageNum">-->
+<!--                    <c:url value="/list" var="pageLink">-->
+<!--                        <c:param name="page", value="${pageNum }" />-->
+<!--                    </c:url>-->
+<!--                    <li class="page-item">-->
+<!--                        <a class="page-link" href="${pageLink } > ${pageNum }"></a>-->
+<!--                    </li>-->
+<!--                </c:foreach>-->
+<!--            </ul>-->
+<!--        </nav>-->
+<!--    </div>-->
+<!--</div>-->
+<div class="container-lg">
+    <div class="row">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <th:block th:each="pageNum : ${#numbers.sequence(pageInfo.leftPageNum, pageInfo.rightPageNum)}"> <!-- object로 가져오지 않아도 사용가능-->
+                    <a th:href="@{/list(page=${pageNum})}" class="page-link"  th:text="${pageNum}" />
+                </th:block>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<br>
+
+</body>
+</html>

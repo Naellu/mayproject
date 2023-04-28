@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{common/header :: header}" />
+<body>
+<div th:replace="~{common/bodyHeader :: bodyHeader}" />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <form action="#" th:action="@{/create/new}" th:object="${board}" method="post">
+                <br>
+                <h2>새 게시물 작성하기</h2>
+                <br>
+                <div>
+                    <input th:type="hidden" th:field="*{id}">
+                </div>
+                <div class="mb-3">
+                    <label th:for="title" class="form-label">제목</label>
+                    <input th:type="text" th:field="*{title}" class="form-control" placeholder="제목을 입력해주세요" required>
+                </div>
+                <div class="mb-3">
+                    <label th:for="content" class="form-label">본문</label>
+                    <textarea rows="10" th:field="*{body}" class="form-control" placeholder="본문을 입력해주세요" required></textarea>
+                </div>
+                <div>
+                    <input th:type="hidden" th:field="*{inserted}">
+                </div>
+                <div class="mb-3">
+                    <label th:for="writer" class="form-label">작성자</label>
+                    <input th:type="text" th:field="*{writer}" class="form-control" placeholder="작성자를 입력해주세요" required>
+                </div>
+                <button class="btn btn-primary" th:type="submit">작성하기</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

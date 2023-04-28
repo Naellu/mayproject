@@ -39,7 +39,7 @@ public class BoardService {
     }
 
 
-    public Map<String, Object> listBoard(Integer page) {
+    public Map<String, Object> listBoard(Integer page, String search) {
         // TODO : 게시물 목록 넘겨주기, 페이지네이션이 필요한 정보 구해서 넘겨주기
 
         // 한 페이지 당 보여줄 게시물 수
@@ -54,7 +54,11 @@ public class BoardService {
         Integer lastPageNumber = (numOfRecords - 1) / rowPerPage + 1;
 
         // 페이지네이션 왼쪽번호
-        Integer leftPageNum = page - 5;
+//        Integer leftPageNum = page - 5;
+
+        // 네비게이션 범위를 넘기전까지(현재 페이지가 rightPageNum보다 큰 값을 가지기전까지) 왼쪽번호 고정
+        Integer leftPageNum = ((page - 1) / 10) * 10 + 1;
+
         // leftPageNum이 1보다 작으면 안됨
         leftPageNum = Math.max(leftPageNum, 1);
 
@@ -70,7 +74,7 @@ public class BoardService {
         pageInfo.put("lastPageNumber", lastPageNumber);
 
         // 게시물 목록 ------
-        List<Board> list = mapper.selectAllPaging(startIndex, rowPerPage);
+        List<Board> list = mapper.selectAllPaging(startIndex, rowPerPage, search);
 
         return Map.of("pageInfo", pageInfo,
                     "boardList", list);

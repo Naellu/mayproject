@@ -29,20 +29,15 @@ public class BoardController {
     // 경로 : http://localhost:8080?page=3
     // 경로 : http://localhost:8080/list?page=5
     // 게시물 목록
-    // @RequestMapping(value = {"/", "list"}, method = RequestMethod.GET)
     @GetMapping({"/", "/list"})
     public String list(Model model,
                        @RequestParam(value = "page", defaultValue = "1") Integer page,
                        @RequestParam(value = "search", defaultValue = "") String search) {
         // 1. request param = 수집/가공
         // 2. business logic 처리
-//        List<Board> list = service.listBoard(); // 페이지 처리 전
-//        List<Board> list = service.listBoard(page); // 페이지 처리 후
-        Map<String, Object> result = service.listBoard(page, search);// 페이지 처리 후 ---> pageInfo와 boardList가 담겨있다
+        Map<String, Object> result = service.listBoard(page, search);
 
         // 3. add attribute
-//        model.addAttribute("boardList", list);
-//        log.info("board record counting = {}", list.size());
         model.addAttribute("boardList", result.get("boardList"));
         model.addAttribute("pageInfo", result.get("pageInfo"));
 //        model.addAttribute(result); // addAttribute overroading
@@ -87,17 +82,6 @@ public class BoardController {
             return "redirect:/modify/" + board.getId();
         }
     }
-
-//    @PostMapping("/remove")
-//    public String remove(Integer id) {
-//        boolean ok = service.remove(id);
-//        if (ok) {
-//            log.info("deleted BoardId={}", id);
-//            return "redirect:/list";
-//        } else {
-//            return "redirect:/id/" + service.getBoard(id);
-//        }
-//    }
 
     @PostMapping("/remove")
     public String remove(Integer id, RedirectAttributes rttr) {

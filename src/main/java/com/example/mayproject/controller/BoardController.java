@@ -36,13 +36,14 @@ public class BoardController {
         // 2. business logic 처리
 //        List<Board> list = service.listBoard(); // 페이지 처리 전
 //        List<Board> list = service.listBoard(page); // 페이지 처리 후
-        Map<String, Object> result = service.listBoard(page);// 페이지 처리 후
+        Map<String, Object> result = service.listBoard(page);// 페이지 처리 후 ---> pageInfo와 boardList가 담겨있다
 
         // 3. add attribute
 //        model.addAttribute("boardList", list);
 //        log.info("board record counting = {}", list.size());
         model.addAttribute("boardList", result.get("boardList"));
         model.addAttribute("pageInfo", result.get("pageInfo"));
+//        model.addAttribute(result); // addAttribute overroading
 
         // 4. forward/redirect
         return "list";

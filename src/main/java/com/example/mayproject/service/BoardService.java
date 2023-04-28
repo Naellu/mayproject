@@ -48,7 +48,7 @@ public class BoardService {
         // 쿼리절에 사용할 시작 인덱스
         Integer startIndex = (page - 1) * rowPerPage;
 
-        // 페이지네이션이 필요한 정보
+        // 페이지네이션이 필요한 정보 -----
         Integer numOfRecords = mapper.countAll(); // 전체 레코드의 개수
         // 마지막 페이지 번호
         Integer lastPageNumber = (numOfRecords - 1) / rowPerPage + 1;
@@ -66,10 +66,10 @@ public class BoardService {
         Map<String, Object> pageInfo = new HashMap<>();
         pageInfo.put("leftPageNum", leftPageNum);
         pageInfo.put("rightPageNum", rightPageNum);
-//        pageInfo.put("lastPageNum", lastPageNumber);
+        pageInfo.put("currentPageNum", page);
+        pageInfo.put("lastPageNumber", lastPageNumber);
 
-        // 게시물 목록
-//        return mapper.selectAllPaging(startIndex, rowPerPage);
+        // 게시물 목록 ------
         List<Board> list = mapper.selectAllPaging(startIndex, rowPerPage);
 
         return Map.of("pageInfo", pageInfo,

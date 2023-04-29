@@ -18,6 +18,18 @@
         <li class="nav-item"><a class="nav-link ${current eq 'create' ? 'active' : '' }" href="/create">글작성</a></li>
       </ul>
       <form class="d-flex" role="search" th:action="@{/list}">
+        <!-- 드롭다운 -->
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button"
+                  data-bs-toggle="dropdown" data-bs-target="#dropDownContent" aria-expanded="false">
+            조건
+          </button>
+          <ul class="dropdown-menu" id="dropDownContent">
+            <li><a class="dropdown-item" href="#">전체</a></li>
+            <li><a class="dropdown-item" href="#">제목만</a></li>
+            <li><a class="dropdown-item" href="#">제목+내용</a></li>
+          </ul>
+        </div>
         <input class="form-control me-2" th:type="search" placeholder="Search" aria-label="Search" name="search">
         <button class="btn btn-outline-success" type="submit">
           <i class="fa-solid fa-magnifying-glass"></i>
@@ -26,4 +38,5 @@
     </div>
   </div>
 </nav>
+
 </div>

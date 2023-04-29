@@ -16,7 +16,7 @@
                 <span th:text="${board.writer}"></span>
             </div>
             <div class="mb-3" style="margin-bottom: 0 !important;">
-                <label th:for="inserted" class="form-label">작성자 : </label>
+                <label th:for="inserted" class="form-label">작성일시 : </label>
                 <span th:text="${board.inserted}"></span>
             </div>
             <hr>
@@ -29,24 +29,21 @@
             <br>
             <div class="mb-3">
                 <a class="btn btn-secondary" th:href="@{/modify/{id}(id=${board.id})}">수정하기</a>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="deleteConfirmModal">삭제하기</button>
+                <!-- test modal button -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    삭제하기
+                </button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="d-none">
-    <form th:action="@{/remove}" th:object="${board}" method="post" id="removeForm">
-        <input th:type="hidden" name="id" th:value="${board.id}"/>
-    </form>
-</div>
-
 <!-- Modal -->
-<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">게시물 삭제</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -54,12 +51,17 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-danger" th:form="removeForm" th:type="submit">삭제</button>
+                <button type="submit" class="btn btn-danger" th:form="removeForm">삭제</button>
             </div>
         </div>
     </div>
 </div>
 
+<div class="d-none">
+    <form th:action="@{/remove}" th:object="${board}" method="post" th:id="removeForm">
+        <input th:type="hidden" name="id" th:value="${board.id}"/>
+    </form>
+</div>
 
 </body>
 </html>

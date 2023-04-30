@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{common/header :: header}">
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<div th:replace="~{common/bodyHeader :: bodyHeader}" />
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+        <div class="container-lg" th:object="${board}">
+            <!--    <h1 th:text="${board.id} + '번 게시물 보기'"></h1>-->
+            <h1 th:text="${board.title}" style="margin-bottom: 30px"></h1>
+            <div class="mb-3" style="margin-bottom: 0 !important;">
+                <label th:for="writer" class="form-label">작성자 : </label>
+                <span th:text="${board.writer}"></span>
+            </div>
+            <div class="mb-3" style="margin-bottom: 0 !important;">
+                <label th:for="inserted" class="form-label">작성일시 : </label>
+                <span th:text="${board.inserted}"></span>
+            </div>
+            <hr>
+            <br>
+            <div class="mb-3">
+                <div th:text="${board.body}"></div>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <div class="mb-3">
+                <a class="btn btn-secondary" th:href="@{/modify/{id}(id=${board.id})}">수정하기</a>
+                <!-- test modal button -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    삭제하기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">게시물 삭제</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                삭제 하시겠습니까?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="submit" class="btn btn-danger" th:form="removeForm">삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-none">
+    <form th:action="@{/remove}" th:object="${board}" method="post" th:id="removeForm">
+        <input th:type="hidden" name="id" th:value="${board.id}"/>
+    </form>
+</div>
+
+</body>
+</html>

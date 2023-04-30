@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="header" th:fragment="bodyHeader">
+<nav class="navbar navbar-dark navbar-expand-lg bg-dark mb-5">
+  <div class="container-lg">
+    <a class="navbar-brand" href="/list" style="font-size: 2em; font-weight: bold;">
+      <img src="/spring_logo.png" alt="" height="54px" width="202px">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/list">목록</a></li>
+        <li class="nav-item"><a class="nav-link ${current eq 'create' ? 'active' : '' }" href="/create">글작성</a></li>
+      </ul>
+      <form class="d-flex" role="search" th:action="@{/list}">
+        <div>
+          <select class="form-select" th:name="condition">
+            <option th:value="all">전체</option>
+            <option th:value="writer">작성자</option>
+            <option th:value="title">제목만</option>
+            <option th:value="titleAndBody">제목+내용</option>
+          </select>
+        </div>
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" th:name="search">
+        <button class="btn btn-outline-success" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+</div>

@@ -71,18 +71,75 @@ public interface BoardMapper {
             LIMIT #{startIndex}, #{rowPerPage}
             </script>
             """) // 15개(rowPerPage)씩 게시물 보여주기
-    List<Board> selectAllPaging(Integer startIndex, Integer rowPerPage, String search);
+    List<Board> selectAllPaging01(Integer startIndex, Integer rowPerPage, String search);
 
+    @Select("""
+            <script>
+            <bind name="pattern" value="'%' + search + '%'" />
+            SELECT
+                id,
+                title,
+                writer,
+                inserted
+            FROM Board
+            
+            <if test="condition != null and condition != ''">
+            WHERE
+                <choose>
+                    <when test="condition == 'title'">
+                       title LIKE #{pattern}
+                    </when>
+                    <when test="condition == 'titleAndBody'">
+                        title LIKE #{pattern} OR 
+                        body LIKE #{pattern}
+                    </when>
+                    <when test="condition == 'writer'">
+                        writer LIKE #{pattern}
+                    </when>
+                    <otherwise>
+                        title LIKE #{pattern} OR 
+                        body LIKE #{pattern} OR 
+                        writer LIKE #{pattern}
+                    </otherwise>
+                </choose>
+            </if>
+                
+            ORDER BY id DESC
+            LIMIT #{startIndex}, #{rowPerPage}
+            </script>
+            """) // 검색조건에 따라 15개(rowPerPage)씩 게시물 보여주기
+    List<Board> selectAllPagingWithCondition(Integer startIndex, Integer rowPerPage, String search, String condition);
+
+
+    // 검색조건(condition) 추가
     @Select("""
             <script>
             <bind name="pattern" value="'%' + search + '%'" />
             SELECT COUNT(*)
             FROM board
+            
+            <if test="condition != null and condition != ''">
             WHERE
-                title LIKE #{pattern} OR
-                body LIKE #{pattern} OR
-                writer LIKE #{pattern}
+                <choose>
+                    <when test="condition == 'title'">
+                       title LIKE #{pattern}
+                    </when>
+                    <when test="condition == 'titleAndBody'">
+                        title LIKE #{pattern} OR 
+                        body LIKE #{pattern}
+                    </when>
+                    <when test="condition == 'writer'">
+                        writer LIKE #{pattern}
+                    </when>
+                    <otherwise>
+                        title LIKE #{pattern} OR 
+                        body LIKE #{pattern} OR 
+                        writer LIKE #{pattern}
+                    </otherwise>
+                </choose>
+            </if>
+            
             </script>
-            """) // 전체 게시물 개수 구하기
-    Integer countAll(String search);
+            """) // 검색 조건에 따라 전체 게시물 개수 구하기
+    Integer countAllWithCondition(String search, String condition);
 }

@@ -32,18 +32,17 @@ public class BoardController {
     @GetMapping({"/", "/list"})
     public String list(Model model,
                        @RequestParam(value = "page", defaultValue = "1") Integer page,
-                       @RequestParam(value = "search", defaultValue = "") String search) {
-        // 1. request param = 수집/가공
-        // 2. business logic 처리
-        Map<String, Object> result = service.listBoard(page, search);
+                       @RequestParam(value = "search", defaultValue = "") String search,
+                       @RequestParam(value = "condition", defaultValue = "") String condition) {
 
-        // 3. add attribute
+//        Map<String, Object> result = service.listBoard(page, search);
+        Map<String, Object> result = service.listBoard(page, search, condition);
+
         model.addAttribute("boardList", result.get("boardList"));
         model.addAttribute("pageInfo", result.get("pageInfo"));
         model.addAttribute("search", search);
 //        model.addAttribute(result); // addAttribute overroading
 
-        // 4. forward/redirect
         return "list";
     }
 
